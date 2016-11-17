@@ -1,0 +1,164 @@
+fileFormatVersion: 2
+guid: 7887d5ce76eaacb4cb2c848250b9f0ec
+timeCreated: 1478634347
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: ' LeftLeg001'
+    100002: ' LeftLeg_foot'
+    100004: ' LeftLeg_foot_end'
+    100006: ' LeftLeg_shin'
+    100008: ' LeftLeg_tibia'
+    100010: //RootNode
+    100012: back
+    100014: bag
+    100016: bag 1
+    100018: bag_end
+    100020: bron
+    100022: butt
+    100024: general
+    100026: Goblin
+    100028: head
+    100030: helmet
+    100032: helmet.001
+    100034: helmet.001_end
+    100036: LeftHand001
+    100038: LeftHand_forearm
+    100040: LeftHand_shoulder
+    100042: LeftHand_wrist
+    100044: LeftHand_wrist_end
+    100046: Mat_0_1
+    100048: peephole
+    100050: peephole_end
+    100052: RightHand001
+    100054: RightHand_forearm
+    100056: RightHand_shoulder
+    100058: RightHand_wrist
+    100060: RightHand_wrist_end
+    100062: RightLeg001
+    100064: RightLeg_foot
+    100066: RightLeg_foot_end
+    100068: RightLeg_shin
+    100070: RightLeg_tibia
+    100072: weapon
+    100074: weapon_end
+    100076: "\u0418\u043A\u043E\u0441\u0444\u0435\u0440\u0430"
+    100078: "\u0421\u043A\u0435\u043B\u0435\u0442.001"
+    400000: ' LeftLeg001'
+    400002: ' LeftLeg_foot'
+    400004: ' LeftLeg_foot_end'
+    400006: ' LeftLeg_shin'
+    400008: ' LeftLeg_tibia'
+    400010: //RootNode
+    400012: back
+    400014: bag
+    400016: bag 1
+    400018: bag_end
+    400020: bron
+    400022: butt
+    400024: general
+    400026: Goblin
+    400028: head
+    400030: helmet
+    400032: helmet.001
+    400034: helmet.001_end
+    400036: LeftHand001
+    400038: LeftHand_forearm
+    400040: LeftHand_shoulder
+    400042: LeftHand_wrist
+    400044: LeftHand_wrist_end
+    400046: Mat_0_1
+    400048: peephole
+    400050: peephole_end
+    400052: RightHand001
+    400054: RightHand_forearm
+    400056: RightHand_shoulder
+    400058: RightHand_wrist
+    400060: RightHand_wrist_end
+    400062: RightLeg001
+    400064: RightLeg_foot
+    400066: RightLeg_foot_end
+    400068: RightLeg_shin
+    400070: RightLeg_tibia
+    400072: weapon
+    400074: weapon_end
+    400076: "\u0418\u043A\u043E\u0441\u0444\u0435\u0440\u0430"
+    400078: "\u0421\u043A\u0435\u043B\u0435\u0442.001"
+    4300000: "\u0418\u043A\u043E\u0441\u0444\u0435\u0440\u0430"
+    4300002: Goblin
+    4300004: bron
+    4300006: bag
+    4300008: Mat_0_1
+    7400000: "\u0421\u043A\u0435\u043B\u0435\u0442.001|\u0421\u043A\u0435\u043B\u0435\u0442.001Action"
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: bag
+    13700002: bron
+    13700004: Goblin
+    13700006: Mat_0_1
+    13700008: "\u0418\u043A\u043E\u0441\u0444\u0435\u0440\u0430"
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleRotations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 1
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

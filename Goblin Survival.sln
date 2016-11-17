@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goblin Survival.CSharp.Plugins", "Goblin Survival.CSharp.Plugins.csproj", "{D7CBF810-A8A9-ABF4-252B-929E0B9A223A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goblin Survival.CSharp", "Goblin Survival.CSharp.csproj", "{F78D7D25-5835-7FE1-FF22-B2765C90A105}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goblin Survival.CSharp.Editor", "Goblin Survival.CSharp.Editor.csproj", "{8A4D069A-60E3-D40E-89DD-9B52EB750E09}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D7CBF810-A8A9-ABF4-252B-929E0B9A223A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D7CBF810-A8A9-ABF4-252B-929E0B9A223A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D7CBF810-A8A9-ABF4-252B-929E0B9A223A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D7CBF810-A8A9-ABF4-252B-929E0B9A223A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F78D7D25-5835-7FE1-FF22-B2765C90A105}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F78D7D25-5835-7FE1-FF22-B2765C90A105}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F78D7D25-5835-7FE1-FF22-B2765C90A105}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F78D7D25-5835-7FE1-FF22-B2765C90A105}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A4D069A-60E3-D40E-89DD-9B52EB750E09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A4D069A-60E3-D40E-89DD-9B52EB750E09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A4D069A-60E3-D40E-89DD-9B52EB750E09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A4D069A-60E3-D40E-89DD-9B52EB750E09}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

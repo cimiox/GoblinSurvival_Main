@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goblin Survival Backup.CSharp.Plugins", "Goblin Survival Backup.CSharp.Plugins.csproj", "{2E5837A6-67B4-9915-FAEE-DDB5FFD66CC8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goblin Survival Backup.CSharp", "Goblin Survival Backup.CSharp.csproj", "{D474A013-FB77-6485-7D1A-0791FC6DCA14}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Goblin Survival Backup.CSharp.Editor", "Goblin Survival Backup.CSharp.Editor.csproj", "{7628596A-BA1C-3A4D-AEF5-71160EB4B40A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2E5837A6-67B4-9915-FAEE-DDB5FFD66CC8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E5837A6-67B4-9915-FAEE-DDB5FFD66CC8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E5837A6-67B4-9915-FAEE-DDB5FFD66CC8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E5837A6-67B4-9915-FAEE-DDB5FFD66CC8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D474A013-FB77-6485-7D1A-0791FC6DCA14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D474A013-FB77-6485-7D1A-0791FC6DCA14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D474A013-FB77-6485-7D1A-0791FC6DCA14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D474A013-FB77-6485-7D1A-0791FC6DCA14}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7628596A-BA1C-3A4D-AEF5-71160EB4B40A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7628596A-BA1C-3A4D-AEF5-71160EB4B40A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7628596A-BA1C-3A4D-AEF5-71160EB4B40A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7628596A-BA1C-3A4D-AEF5-71160EB4B40A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
