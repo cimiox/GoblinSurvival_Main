@@ -20,7 +20,7 @@ public class Cell : MonoBehaviour, IDropHandler
 
             droppedItem.cell = id;
         }
-        else
+        else if (droppedItem.cell != id)
         {
             Transform item = this.transform.GetChild(0);
             item.GetComponent<ItemData>().cell = droppedItem.cell;

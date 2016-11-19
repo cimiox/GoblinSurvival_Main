@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviour
 {
@@ -20,7 +21,6 @@ public class LobbyManager : MonoBehaviour
     public GameObject GroupPanelNoConnection;
     public GameObject GoblinStalker;
     public GameObject GoblinSniper;
-    public GameObject InventoryObj;
     bool check = true;
     private bool connectFailed = false;
 
@@ -136,17 +136,16 @@ public class LobbyManager : MonoBehaviour
         GoblinSniper.SetActive(false);
         NextPlayerButton.gameObject.SetActive(false);
         InventoryPanel.SetActive(false);
-        InventoryObj.SetActive(false);
     }
 
     public void NextPlayer()
     {
-        if (GoblinStalker.active)
+        if (GoblinStalker.activeSelf)
         {
             GoblinSniper.SetActive(true);
             GoblinStalker.SetActive(false);
         }
-        else if (GoblinSniper.active)
+        else if (GoblinSniper.activeSelf)
         {
             GoblinSniper.SetActive(false);
             GoblinStalker.SetActive(true);
@@ -155,10 +154,6 @@ public class LobbyManager : MonoBehaviour
 
     public void ShowInventory()
     {
-        check = false;
-        InventoryPanel.SetActive(true);
-        InventoryObj.SetActive(true);
-        GroupPanelLobby.SetActive(false);
+        SceneManager.LoadScene("Inventory");
     }
-
 }

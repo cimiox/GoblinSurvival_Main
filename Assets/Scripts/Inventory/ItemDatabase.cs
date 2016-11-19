@@ -6,12 +6,22 @@ using System.IO;
 
 public class ItemDatabase : MonoBehaviour
 {
+    public static ItemDatabase Instance = null;
     public List<Item> database = new List<Item>();
     private JsonData itemData;
+    public TextAsset _textAsset;
 
     void Start()
     {
-        itemData = JsonMapper.ToObject(File.ReadAllText(Application.dataPath + "/StreamingAsssets/Items.json"));
+        if (Instance == null)
+            Instance = this;
+        else
+            DestroyObject(this);
+
+        DontDestroyOnLoad(this);
+
+        itemData = JsonMapper.ToObject(_textAsset.text);
+
         ConstructItemDatabase();
     }
 
