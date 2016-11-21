@@ -55,8 +55,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryCell: {fileID: 113312, guid: 26dfdbadd2b1ffb42b5f7d0a830eab10, type: 2}
   inventoryItem: {fileID: 139526, guid: 9fb2e7d454ac9854983a8f58eb549867, type: 2}
-  _sceneState: 0
+  preservationItems: {fileID: 4900000, guid: 202153e5bab6dc44aa9a1c9d3a82c422, type: 3}
+  items: []
+  itemsGameObjects: []
   slots: []
+  itemsInGame: []
 --- !u!114 &114306707480787998
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -80,4 +83,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 664833277640a034d9a36dec316bf6bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  database: []
   _textAsset: {fileID: 4900000, guid: adf9ba9147181094eb402aedc9f43208, type: 3}

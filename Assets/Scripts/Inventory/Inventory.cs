@@ -3,17 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System;
+using System.Xml;
+using System.IO;
 
 public class Inventory : MonoBehaviour
 {
     public static Inventory Instance = null;
     GameObject inventoryPanel;
     GameObject cellPanel;
+
+    GameObject cellPanelInGame;
+
     public GameObject inventoryCell;
     public GameObject inventoryItem;
     ItemDatabase database;
 
-    public static EventHandler OnChangeScene = delegate { };
+    public TextAsset preservationItems;
 
     private SceneState sceneState;
     public SceneState SceneState
@@ -22,52 +27,111 @@ public class Inventory : MonoBehaviour
         set
         {
             sceneState = value;
-            OnChangeScene(null, EventArgs.Empty);
         }
     }
 
     private int countSlots = 6;
     public List<Item> items = new List<Item>();
-    public List<GameObject> itemsGameObject = new List<GameObject>();
+    public List<GameObject> itemsGameObjects = new List<GameObject>();
     public List<GameObject> slots = new List<GameObject>();
+
+    public List<Item> itemsInGame = new List<Item>();
+
+    List<int> idItems = new List<int>();
+
+    readonly string pathToFile = "Assets/Test.xml";
 
     void Start()
     {
+        CreateCells();
+
         Singletone();
 
-        OnChangeScene += CreateCells;
+        ChangeState();
+
+        ReadInFile();
+
+        for (int i = 0; i < idItems.Count; i++)
+        {
+            AddItem(idItems[i]);
+        }
     }
 
-    void CreateCells(object sender, EventArgs e)
+    public void ReadInFile()
     {
-        print("Вызвало не один раз");
+        if (File.Exists(pathToFile))
+        {
+            XmlTextReader reader = new XmlTextReader(pathToFile);
 
+            while (reader.Read())
+            {
+                print("Вызывает бесконечно");
+                if (reader.IsStartElement("Item"))
+                {
+                    idItems.Add(Convert.ToInt32(reader.ReadString()));
+                }
+            }
+
+            reader.Close();
+        }
+    }
+
+    public void WriteInFile()
+    {
+        XmlDocument xmlDoc = new XmlDocument();
+        XmlNode rootNode = xmlDoc.CreateElement("Items");
+        xmlDoc.AppendChild(rootNode);
+
+        XmlNode itemNode;
+        XmlAttribute itemAttribute;
+
+        for (int i = 0; i < items.Count && i < itemsGameObjects.Count; i++)
+        {
+            if (items[i].Id != -1)
+            {
+                itemNode = xmlDoc.CreateElement("Item");
+                itemAttribute = xmlDoc.CreateAttribute("ValueInStack");
+                itemAttribute.Value = itemsGameObjects[i].GetComponentInChildren<Text>().text;
+                itemNode.Attributes.Append(itemAttribute);
+                itemNode.InnerText = items[i].Id.ToString();
+                rootNode.AppendChild(itemNode);
+            }
+        }
+
+        xmlDoc.Save(pathToFile);
+    }
+
+    private void CreateCells()
+    {
         database = GetComponent<ItemDatabase>();
         inventoryPanel = GameObject.Find("InventoryPanel");
         cellPanel = inventoryPanel.transform.FindChild("InventoryWindow").gameObject;
 
-        for (int i = 0; i < countSlots; i++)
+        if (slots.Count != countSlots)
         {
-            items.Add(new Item());
-            slots.Add(Instantiate(inventoryCell));
-            slots[i].GetComponent<Cell>().id = i;
-            slots[i].transform.SetParent(cellPanel.transform);
+            for (int i = 0; i < countSlots; i++)
+            {
+                items.Add(new Item());
+                slots.Add(Instantiate(inventoryCell));
+                slots[i].GetComponent<Cell>().id = i;
+                slots[i].transform.SetParent(cellPanel.transform);
+            }
         }
-
-        Tooltip.Instance.tooltip = GameObject.Find("Tooltip");
-        Tooltip.Instance.tooltip.SetActive(false);
-
-        AddItem(0);
-        AddItem(0);
-        AddItem(1);
-
-        OnChangeScene -= CreateCells;
+        else
+        {
+            for (int i = 0; i < countSlots; i++)
+            {
+                items.Add(new Item());
+                slots[i] = Instantiate(inventoryCell);
+                slots[i].GetComponent<Cell>().id = i;
+                slots[i].transform.SetParent(cellPanel.transform);
+            }
+        }
     }
 
     void LateUpdate()
     {
         ChangeState();
-        print(sceneState);
     }
 
     public void AddItem(int id)
@@ -78,17 +142,15 @@ public class Inventory : MonoBehaviour
                 break;
             case SceneState.InInventory:
                 AddItemInInventory(id);
-                OnChangeScene += CreateCells;
                 break;
             case SceneState.InGame:
-                AddItemInGame(id);
                 break;
         }
     }
 
     private SceneState ChangeState()
     {
-        Label:
+    Label:
         int loadedLevel = SceneManagerHelper.ActiveSceneBuildIndex;
         switch (loadedLevel)
         {
@@ -104,22 +166,6 @@ public class Inventory : MonoBehaviour
             default:
                 goto Label;
         }
-    } 
-
-    public void AddItemInGame(int id)
-    {
-        for (int i = 0; i < itemsGameObject.Count; i++)
-        {
-            GameObject itemObj = Instantiate(inventoryItem);
-            itemObj.GetComponent<ItemData>()._item = itemsGameObject[i].GetComponent<Item>();
-            itemObj.GetComponent<ItemData>().cell = i;
-            itemObj.transform.SetParent(slots[i].transform);
-            itemObj.transform.position = Vector2.zero;
-            itemObj.GetComponent<Image>().sprite = itemsGameObject[i].GetComponent<Item>().Icon;
-            itemObj.name = itemsGameObject[i].GetComponent<Item>().Tittle;
-        }
-
-        OnChangeScene -= CreateCells;
     }
 
     public void AddItemInInventory(int id)
@@ -133,6 +179,7 @@ public class Inventory : MonoBehaviour
                 if (items[i].Id == id)
                 {
                     ItemData data = slots[i].transform.GetChild(0).GetComponent<ItemData>();
+
                     data.amount++;
                     data.transform.GetChild(0).GetComponent<Text>().text = data.amount.ToString();
 
@@ -155,16 +202,12 @@ public class Inventory : MonoBehaviour
                     itemObj.GetComponent<Image>().sprite = itemToAdd.Icon;
                     itemObj.name = itemToAdd.Tittle;
 
-                    itemsGameObject.Add(itemObj);
-
-                    
-
+                    itemsGameObjects.Add(itemObj);
                     break;
                 }
             }
         }
 
-        OnChangeScene -= CreateCells;
     }
 
     private bool CheckItemInInventory(Item item)
@@ -185,8 +228,6 @@ public class Inventory : MonoBehaviour
             Instance = this;
         else
             DestroyObject(this);
-
-        DontDestroyOnLoad(this);
     }
 }
 

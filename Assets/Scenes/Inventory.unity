@@ -91,6 +91,53 @@ NavMeshSettings:
     cellSize: 0.16666667
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1001 &21527360
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 4153959186231728, guid: d3ad0fb72e253e842a5c8f22cd9c6f65, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 188.68848
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153959186231728, guid: d3ad0fb72e253e842a5c8f22cd9c6f65, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 271.80875
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153959186231728, guid: d3ad0fb72e253e842a5c8f22cd9c6f65, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: -0.6875
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153959186231728, guid: d3ad0fb72e253e842a5c8f22cd9c6f65, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153959186231728, guid: d3ad0fb72e253e842a5c8f22cd9c6f65, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153959186231728, guid: d3ad0fb72e253e842a5c8f22cd9c6f65, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153959186231728, guid: d3ad0fb72e253e842a5c8f22cd9c6f65, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4153959186231728, guid: d3ad0fb72e253e842a5c8f22cd9c6f65, type: 2}
+      propertyPath: m_RootOrder
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 114306707480787998, guid: d3ad0fb72e253e842a5c8f22cd9c6f65,
+        type: 2}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1610335804}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: d3ad0fb72e253e842a5c8f22cd9c6f65, type: 2}
+  m_IsPrefabParent: 0
 --- !u!1 &841314706
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,6 +518,30 @@ Prefab:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: LoadLobbyScene
       objectReference: {fileID: 0}
+    - target: {fileID: 1004136714999924, guid: 0d5a4ec80728464458e49b58d5b571d7, type: 2}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 224828225811154928, guid: 0d5a4ec80728464458e49b58d5b571d7,
+        type: 2}
+      propertyPath: m_AnchorMin.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224828225811154928, guid: 0d5a4ec80728464458e49b58d5b571d7,
+        type: 2}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 224828225811154928, guid: 0d5a4ec80728464458e49b58d5b571d7,
+        type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: 75
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 0d5a4ec80728464458e49b58d5b571d7, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1610335804 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1004136714999924, guid: 0d5a4ec80728464458e49b58d5b571d7,
+    type: 2}
+  m_PrefabInternal: {fileID: 1610335803}

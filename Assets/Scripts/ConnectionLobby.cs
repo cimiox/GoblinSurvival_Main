@@ -22,7 +22,7 @@ public class ConnectionLobby : Photon.MonoBehaviour
     float timer = 0;
     float TimeBetweenBullets = 1f;
     public bool isShoot = false;
-    /// <summary>if we don't want to connect in Start(), we have to "remember" if we called ConnectUsingSettings()</summary>
+
     private bool ConnectInUpdate = true;
 
     bool Check = false;
@@ -37,6 +37,7 @@ public class ConnectionLobby : Photon.MonoBehaviour
         Spawn = GameObject.Find("Spawns");
         StartCoroutine(NewEnemy(countEnemy));
     }
+
 
     public virtual void FixedUpdate()
     {

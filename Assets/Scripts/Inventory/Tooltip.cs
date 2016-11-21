@@ -18,10 +18,6 @@ public class Tooltip : MonoBehaviour
         else
             DestroyObject(this);
 
-        DontDestroyOnLoad(this);
-
-        tooltip = GameObject.Find("Tooltip");
-        tooltip.SetActive(false);
     }
 
     void Update()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using LitJson;
 using System.IO;
+using System;
 
 public class ItemDatabase : MonoBehaviour
 {
@@ -17,8 +18,6 @@ public class ItemDatabase : MonoBehaviour
             Instance = this;
         else
             DestroyObject(this);
-
-        DontDestroyOnLoad(this);
 
         itemData = JsonMapper.ToObject(_textAsset.text);
 
@@ -46,6 +45,7 @@ public class ItemDatabase : MonoBehaviour
     }
 }
 
+[Serializable]
 public class Item
 {
     public int Id { get; set; }
