@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
-using System;
 using System.Xml;
 using System.IO;
 
@@ -38,6 +37,7 @@ public class Inventory : MonoBehaviour
     public List<Item> itemsInGame = new List<Item>();
 
     List<int> idItems = new List<int>();
+    List<string> CountsItems = new List<string>();
 
     readonly string pathToFile = "Assets/Test.xml";
 
@@ -55,24 +55,25 @@ public class Inventory : MonoBehaviour
         {
             AddItem(idItems[i]);
         }
+
+        for (int i = 0; i < CountsItems.Count && i < itemsGameObjects.Count; i++)
+        {
+            itemsGameObjects[i].GetComponentInChildren<Text>().text = CountsItems[i];
+        }
     }
 
     public void ReadInFile()
     {
         if (File.Exists(pathToFile))
         {
-            XmlTextReader reader = new XmlTextReader(pathToFile);
+            XmlDocument doc = new XmlDocument();
+            doc.Load(pathToFile);
 
-            while (reader.Read())
+            foreach (XmlElement item in doc.DocumentElement.ChildNodes)
             {
-                print("Вызывает бесконечно");
-                if (reader.IsStartElement("Item"))
-                {
-                    idItems.Add(Convert.ToInt32(reader.ReadString()));
-                }
+                idItems.Add(int.Parse(item.ChildNodes[0].InnerText));
+                CountsItems.Add(item.ChildNodes[1].InnerText);
             }
-
-            reader.Close();
         }
     }
 
@@ -83,18 +84,22 @@ public class Inventory : MonoBehaviour
         xmlDoc.AppendChild(rootNode);
 
         XmlNode itemNode;
-        XmlAttribute itemAttribute;
+        XmlNode itemsNode;
 
         for (int i = 0; i < items.Count && i < itemsGameObjects.Count; i++)
         {
             if (items[i].Id != -1)
             {
                 itemNode = xmlDoc.CreateElement("Item");
-                itemAttribute = xmlDoc.CreateAttribute("ValueInStack");
-                itemAttribute.Value = itemsGameObjects[i].GetComponentInChildren<Text>().text;
-                itemNode.Attributes.Append(itemAttribute);
-                itemNode.InnerText = items[i].Id.ToString();
                 rootNode.AppendChild(itemNode);
+
+                itemsNode = xmlDoc.CreateElement("Id");
+                itemsNode.InnerText = items[i].Id.ToString();
+                itemNode.AppendChild(itemsNode);
+
+                itemsNode = xmlDoc.CreateElement("InStack");
+                itemsNode.InnerText = itemsGameObjects[i].GetComponentInChildren<Text>().text;
+                itemNode.AppendChild(itemsNode);
             }
         }
 

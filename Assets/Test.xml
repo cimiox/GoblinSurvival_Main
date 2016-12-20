@@ -1,5 +1,16 @@
 <Items>
-  <Item ValueInStack="">0</Item>
-  <Item ValueInStack="">1</Item>
-  <Item ValueInStack="">1</Item>
+  <Item>
+    <Id>0</Id>
+    <InStack>2</InStack>
+  </Item>
+  <Item>
+    <Id>1</Id>
+    <InStack>
+    </InStack>
+  </Item>
+  <Item>
+    <Id>1</Id>
+    <InStack>
+    </InStack>
+  </Item>
 </Items>
