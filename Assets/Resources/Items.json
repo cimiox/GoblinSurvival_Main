@@ -3,7 +3,7 @@
         "Id": 0,
         "Title": "The first item",
         "Value": 0,
-        "Slug": "IconRock",
+        "Slug": "Sprite1",
         "Stackable": true
 
     },
@@ -11,7 +11,7 @@
         "Id": 1,
         "Title": "The second item",
         "Value": 0,
-        "Slug": "ButtonBrakeOverSprite",
+        "Slug": "Sprite2",
         "Stackable": false
     }
 ]

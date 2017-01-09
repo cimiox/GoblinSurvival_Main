@@ -1,12 +1,21 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using System.Xml;
 using System.IO;
+using System.ComponentModel;
 
 public class Inventory : MonoBehaviour
 {
+    #region Events
+
+
+    #endregion Events
+
+    public GameObject InventoryPanel;
+
     public static Inventory Instance = null;
     GameObject inventoryPanel;
     GameObject cellPanel;
@@ -31,21 +40,57 @@ public class Inventory : MonoBehaviour
 
     private int countSlots = 6;
     public List<Item> items = new List<Item>();
-    public List<GameObject> itemsGameObjects = new List<GameObject>();
-    public List<GameObject> slots = new List<GameObject>();
 
-    public List<Item> itemsInGame = new List<Item>();
+    public List<ItemObject> itemsGameObjects = new List<ItemObject>();
+    public List<GameObject> slots = new List<GameObject>();
 
     List<int> idItems = new List<int>();
     List<string> CountsItems = new List<string>();
 
-    readonly string pathToFile = "Assets/Test.xml";
+    public GameObject InventoryWindow;
+
+    public string pathToFile
+    {
+        get
+        {
+#if UNITY_EDITOR
+            return "Assets/Resources/Test.xml";
+#elif UNITY_ANDROID
+            return Application.persistentDataPath + "Test.xml";
+#endif
+        }
+    }
+
+    int activeInventoryPanel = 0;
 
     void Start()
     {
-        CreateCells();
-
         Singletone();
+    }
+
+    void LateUpdate()
+    {
+        ChangeState();
+
+        if (InventoryPanel.activeSelf && activeInventoryPanel == 0)
+        {
+            activeInventoryPanel++;
+
+            if (InventoryWindow.GetComponentsInChildren<Cell>().Length < countSlots)
+            {
+                AddItemsInInventory();
+            }
+        }
+
+        if (!InventoryPanel.activeSelf)
+        {
+            activeInventoryPanel = 0;
+        }
+    }
+
+    public void AddItemsInInventory()
+    {
+        CreateCells();
 
         ChangeState();
 
@@ -58,7 +103,11 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < CountsItems.Count && i < itemsGameObjects.Count; i++)
         {
-            itemsGameObjects[i].GetComponentInChildren<Text>().text = CountsItems[i];
+            if (CountsItems[i] != null)
+            {
+                itemsGameObjects[i].ItemObj.GetComponent<ItemData>().amount = Convert.ToInt32(CountsItems[i].Trim());
+                itemsGameObjects[i].ItemObj.GetComponentInChildren<Text>().text = CountsItems[i];
+            }
         }
     }
 
@@ -86,19 +135,19 @@ public class Inventory : MonoBehaviour
         XmlNode itemNode;
         XmlNode itemsNode;
 
-        for (int i = 0; i < items.Count && i < itemsGameObjects.Count; i++)
+        foreach (var item in itemsGameObjects)
         {
-            if (items[i].Id != -1)
+            if (item.ID != -1)
             {
                 itemNode = xmlDoc.CreateElement("Item");
                 rootNode.AppendChild(itemNode);
 
                 itemsNode = xmlDoc.CreateElement("Id");
-                itemsNode.InnerText = items[i].Id.ToString();
+                itemsNode.InnerText = item.ID.ToString();
                 itemNode.AppendChild(itemsNode);
 
                 itemsNode = xmlDoc.CreateElement("InStack");
-                itemsNode.InnerText = itemsGameObjects[i].GetComponentInChildren<Text>().text;
+                itemsNode.InnerText = item.ItemObj.GetComponentInChildren<Text>().text;
                 itemNode.AppendChild(itemsNode);
             }
         }
@@ -134,18 +183,13 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    void LateUpdate()
-    {
-        ChangeState();
-    }
+
 
     public void AddItem(int id)
     {
         switch (SceneState)
         {
             case SceneState.InLobby:
-                break;
-            case SceneState.InInventory:
                 AddItemInInventory(id);
                 break;
             case SceneState.InGame:
@@ -163,9 +207,6 @@ public class Inventory : MonoBehaviour
                 SceneState = SceneState.InLobby;
                 return SceneState;
             case 1:
-                SceneState = SceneState.InInventory;
-                return SceneState;
-            case 2:
                 SceneState = SceneState.InGame;
                 return SceneState;
             default:
@@ -173,7 +214,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void AddItemInInventory(int id)
+    private void AddItemInInventory(int id)
     {
         Item itemToAdd = database.FetchItemById(id);
 
@@ -203,16 +244,20 @@ public class Inventory : MonoBehaviour
                     itemObj.GetComponent<ItemData>()._item = itemToAdd;
                     itemObj.GetComponent<ItemData>().cell = i;
                     itemObj.transform.SetParent(slots[i].transform);
-                    itemObj.transform.position = Vector2.zero;
+
+                    itemObj.GetComponent<RectTransform>().offsetMin = Vector2.zero;
+                    itemObj.GetComponent<RectTransform>().offsetMax = Vector2.zero;
+
                     itemObj.GetComponent<Image>().sprite = itemToAdd.Icon;
                     itemObj.name = itemToAdd.Tittle;
 
-                    itemsGameObjects.Add(itemObj);
+                    itemsGameObjects.Add(new ItemObject(itemToAdd.Id, itemObj));
                     break;
                 }
             }
         }
 
+        WriteInFile();
     }
 
     private bool CheckItemInInventory(Item item)
@@ -233,12 +278,44 @@ public class Inventory : MonoBehaviour
             Instance = this;
         else
             DestroyObject(this);
+
+        DontDestroyOnLoad(this);
+    }
+
+    public class ItemObject
+    {
+        public int ID { get; set; }
+        public GameObject ItemObj { get; set; }
+
+        public ItemObject(int id, GameObject item)
+        {
+            this.ID = id;
+            this.ItemObj = item;
+        }
+    }
+
+    public void AddRandomItem()
+    {
+        System.Random rand = new System.Random();
+        int id = rand.Next(0, 2);
+        AddItemInInventory(id);
+    }
+}
+
+public class ItemGameObject
+{
+    Item item;
+    GameObject GOItem;
+
+    public ItemGameObject(Item _item, GameObject _gOItem)
+    {
+        this.item = _item;
+        this.GOItem = _gOItem;
     }
 }
 
 public enum SceneState
 {
     InLobby = 0,
-    InInventory = 1,
-    InGame = 2
+    InGame = 1
 }

@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class LobbyManager : MonoBehaviour
+public class LobbyManager : Photon.MonoBehaviour
 {
     public InputField NicknameField;
     public InputField RoomNameField;
@@ -24,19 +24,23 @@ public class LobbyManager : MonoBehaviour
     bool check = true;
     private bool connectFailed = false;
 
+    const string usingSetting = "0.1";
+
     void Awake()
     {
         PhotonNetwork.automaticallySyncScene = true;
 
         if (PhotonNetwork.connectionStateDetailed == ClientState.PeerCreated)
         {
-            PhotonNetwork.ConnectUsingSettings("0.1");
+            PhotonNetwork.ConnectUsingSettings(usingSetting);
         }
 
         if (string.IsNullOrEmpty(PhotonNetwork.playerName))
         {
             PhotonNetwork.playerName = "Guest" + Random.Range(1, 100);
         }
+
+        print(PhotonNetwork.connectionStateDetailed);
     }
 
     void Update()
@@ -75,7 +79,7 @@ public class LobbyManager : MonoBehaviour
     public void TryAganinButton()
     {
         connectFailed = false;
-        PhotonNetwork.ConnectUsingSettings("0.1");
+        PhotonNetwork.ConnectUsingSettings(usingSetting);
     }
 
     public void CreateRoomHandler()
@@ -83,13 +87,13 @@ public class LobbyManager : MonoBehaviour
         bool create = true;
         foreach (var item in PhotonNetwork.GetRoomList())
         {
-            if (item.name == RoomNameField.text)
+            if (item.Name == RoomNameField.text)
                 create = false;
         }
         if (!create)
             return;
 
-        PhotonNetwork.CreateRoom(RoomNameField.text, new RoomOptions { maxPlayers = 5 }, null);
+        PhotonNetwork.CreateRoom(RoomNameField.text, new RoomOptions { MaxPlayers = 5 }, null);
 
         PhotonNetwork.playerName = NicknameField.text;
     }
@@ -154,6 +158,15 @@ public class LobbyManager : MonoBehaviour
 
     public void ShowInventory()
     {
-        SceneManager.LoadScene("Inventory");
+        check = false;
+        GroupPanelLobby.SetActive(false);
+        InventoryPanel.SetActive(true);
+    }
+
+    public void BackToLobby()
+    {
+        check = true;
+        GroupPanelLobby.SetActive(true);
+        InventoryPanel.SetActive(false);
     }
 }

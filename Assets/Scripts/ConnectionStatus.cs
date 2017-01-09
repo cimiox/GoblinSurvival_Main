@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 
-public class ConnectionStatus : MonoBehaviour {
+public class ConnectionStatus : Photon.MonoBehaviour {
     public InputField InputFieldNickName;
     public Button ButtonNickName;
 

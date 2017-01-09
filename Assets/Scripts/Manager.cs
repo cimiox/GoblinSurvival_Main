@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,7 +25,7 @@ public class Manager : MonoBehaviour
 
         if (CountEnemyDeath == ConnectionLobby.Instance.countEnemy)
         {
-            //Inventory.AddItem(Resources.Load("Inventory/Strength") as GameObject);
+            Inventory.Instance.AddItem(1);
         }
     }
 }

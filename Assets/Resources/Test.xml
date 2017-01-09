@@ -1,0 +1,31 @@
+<Items>
+  <Item>
+    <Id>0</Id>
+    <InStack>10</InStack>
+  </Item>
+  <Item>
+    <Id>1</Id>
+    <InStack>
+    </InStack>
+  </Item>
+  <Item>
+    <Id>1</Id>
+    <InStack>
+    </InStack>
+  </Item>
+  <Item>
+    <Id>1</Id>
+    <InStack>
+    </InStack>
+  </Item>
+  <Item>
+    <Id>1</Id>
+    <InStack>
+    </InStack>
+  </Item>
+  <Item>
+    <Id>1</Id>
+    <InStack>
+    </InStack>
+  </Item>
+</Items>
