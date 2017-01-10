@@ -1,31 +1,37 @@
 <Items>
   <Item>
+    <Id>1</Id>
+    <InStack>
+    </InStack>
+    <Slot>0</Slot>
+  </Item>
+  <Item>
     <Id>0</Id>
-    <InStack>10</InStack>
+    <InStack>34</InStack>
+    <Slot>1</Slot>
   </Item>
   <Item>
     <Id>1</Id>
     <InStack>
     </InStack>
+    <Slot>2</Slot>
   </Item>
   <Item>
     <Id>1</Id>
     <InStack>
     </InStack>
+    <Slot>3</Slot>
   </Item>
   <Item>
     <Id>1</Id>
     <InStack>
     </InStack>
+    <Slot>4</Slot>
   </Item>
   <Item>
     <Id>1</Id>
     <InStack>
     </InStack>
-  </Item>
-  <Item>
-    <Id>1</Id>
-    <InStack>
-    </InStack>
+    <Slot>5</Slot>
   </Item>
 </Items>

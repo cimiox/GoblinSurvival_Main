@@ -45,7 +45,9 @@ public class Inventory : MonoBehaviour
     public List<GameObject> slots = new List<GameObject>();
 
     List<int> idItems = new List<int>();
-    List<string> CountsItems = new List<string>();
+    List<int> CountsItems = new List<int>();
+
+    List<int> ItemCellId = new List<int>();
 
     public GameObject InventoryWindow;
 
@@ -78,7 +80,7 @@ public class Inventory : MonoBehaviour
 
             if (InventoryWindow.GetComponentsInChildren<Cell>().Length < countSlots)
             {
-                AddItemsInInventory();
+                LoadItemsInInventory();
             }
         }
 
@@ -88,7 +90,7 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void AddItemsInInventory()
+    public void LoadItemsInInventory()
     {
         CreateCells();
 
@@ -98,15 +100,19 @@ public class Inventory : MonoBehaviour
 
         for (int i = 0; i < idItems.Count; i++)
         {
-            AddItem(idItems[i]);
+            AddItemInInventory(idItems[i]);
         }
 
         for (int i = 0; i < CountsItems.Count && i < itemsGameObjects.Count; i++)
         {
-            if (CountsItems[i] != null)
+            if (CountsItems[i] == 0)
             {
-                itemsGameObjects[i].ItemObj.GetComponent<ItemData>().amount = Convert.ToInt32(CountsItems[i].Trim());
-                itemsGameObjects[i].ItemObj.GetComponentInChildren<Text>().text = CountsItems[i];
+                itemsGameObjects[i].ItemObj.GetComponent<ItemData>().amount = CountsItems[i];
+            }
+            else
+            {
+                itemsGameObjects[i].ItemObj.GetComponent<ItemData>().amount = CountsItems[i];
+                itemsGameObjects[i].ItemObj.GetComponentInChildren<Text>().text = CountsItems[i].ToString();
             }
         }
     }
@@ -121,8 +127,15 @@ public class Inventory : MonoBehaviour
             foreach (XmlElement item in doc.DocumentElement.ChildNodes)
             {
                 idItems.Add(int.Parse(item.ChildNodes[0].InnerText));
-                CountsItems.Add(item.ChildNodes[1].InnerText);
+
+                if (item.ChildNodes[1].InnerText == null || item.ChildNodes[1].InnerText == "")
+                    CountsItems.Add(0);
+                else
+                    CountsItems.Add(int.Parse(item.ChildNodes[1].InnerText));
+                
+                ItemCellId.Add(Convert.ToInt32(item.ChildNodes[2].InnerText));
             }
+
         }
     }
 
@@ -135,19 +148,23 @@ public class Inventory : MonoBehaviour
         XmlNode itemNode;
         XmlNode itemsNode;
 
-        foreach (var item in itemsGameObjects)
+        foreach (var item in InventoryWindow.GetComponentsInChildren<ItemData>())
         {
-            if (item.ID != -1)
+            if (item._item.Id != -1)
             {
                 itemNode = xmlDoc.CreateElement("Item");
                 rootNode.AppendChild(itemNode);
 
                 itemsNode = xmlDoc.CreateElement("Id");
-                itemsNode.InnerText = item.ID.ToString();
+                itemsNode.InnerText = item._item.Id.ToString();
                 itemNode.AppendChild(itemsNode);
 
                 itemsNode = xmlDoc.CreateElement("InStack");
-                itemsNode.InnerText = item.ItemObj.GetComponentInChildren<Text>().text;
+                itemsNode.InnerText = item.gameObject.GetComponentInChildren<Text>().text;
+                itemNode.AppendChild(itemsNode);
+
+                itemsNode = xmlDoc.CreateElement("Slot");
+                itemsNode.InnerText = item.gameObject.transform.parent.GetComponent<Cell>().id.ToString();
                 itemNode.AppendChild(itemsNode);
             }
         }
@@ -165,20 +182,20 @@ public class Inventory : MonoBehaviour
         {
             for (int i = 0; i < countSlots; i++)
             {
-                items.Add(new Item());
                 slots.Add(Instantiate(inventoryCell));
                 slots[i].GetComponent<Cell>().id = i;
                 slots[i].transform.SetParent(cellPanel.transform);
+                items.Add(new Item());
             }
         }
         else
         {
             for (int i = 0; i < countSlots; i++)
             {
-                items.Add(new Item());
                 slots[i] = Instantiate(inventoryCell);
                 slots[i].GetComponent<Cell>().id = i;
                 slots[i].transform.SetParent(cellPanel.transform);
+                items.Add(new Item());
             }
         }
     }
@@ -217,6 +234,8 @@ public class Inventory : MonoBehaviour
     private void AddItemInInventory(int id)
     {
         Item itemToAdd = database.FetchItemById(id);
+
+        print("ID item to add - " + itemToAdd.Id);
 
         if (itemToAdd.Stackable && CheckItemInInventory(itemToAdd))
         {
@@ -260,6 +279,64 @@ public class Inventory : MonoBehaviour
         WriteInFile();
     }
 
+    private void AddItemInInventory(int id, int slotID)
+    {
+        Item itemToAdd = database.FetchItemById(id);
+        if (!CheckItemInCell(slots[slotID]))
+        {
+            if (itemToAdd.Stackable && CheckItemInInventory(itemToAdd))
+            {
+                for (int i = 0; i < items.Count; i++)
+                {
+                    if (items[i].Id == id)
+                    {
+                        ItemData data = slots[i].transform.GetChild(0).GetComponent<ItemData>();
+
+                        data.amount++;
+                        data.transform.GetChild(0).GetComponent<Text>().text = data.amount.ToString();
+
+                        break;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < items.Count; i++)
+                {
+                    if (items[i].Id == -1)
+                    {
+                        items[i] = itemToAdd;
+                        GameObject itemObj = Instantiate(inventoryItem);
+                        itemObj.GetComponent<ItemData>()._item = itemToAdd;
+                        itemObj.GetComponent<ItemData>().cell = slotID;
+                        itemObj.transform.SetParent(slots[slotID].transform);
+
+                        itemObj.GetComponent<RectTransform>().offsetMin = Vector2.zero;
+                        itemObj.GetComponent<RectTransform>().offsetMax = Vector2.zero;
+
+                        itemObj.GetComponent<Image>().sprite = itemToAdd.Icon;
+                        itemObj.name = itemToAdd.Tittle;
+
+                        itemsGameObjects.Add(new ItemObject(itemToAdd.Id, itemObj));
+                        break;
+                    }
+                }
+            }
+
+            WriteInFile();
+        }
+    }
+
+    private bool CheckItemInCell(GameObject slot)
+    {
+        if (slot.GetComponentInChildren<ItemData>())
+        {
+            return true;
+        }
+
+        return false;
+    }
+
     private bool CheckItemInInventory(Item item)
     {
         for (int i = 0; i < items.Count; i++)
@@ -299,18 +376,6 @@ public class Inventory : MonoBehaviour
         System.Random rand = new System.Random();
         int id = rand.Next(0, 2);
         AddItemInInventory(id);
-    }
-}
-
-public class ItemGameObject
-{
-    Item item;
-    GameObject GOItem;
-
-    public ItemGameObject(Item _item, GameObject _gOItem)
-    {
-        this.item = _item;
-        this.GOItem = _gOItem;
     }
 }
 
