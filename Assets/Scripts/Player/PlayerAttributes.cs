@@ -2,14 +2,22 @@ using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System;
+using System.Collections.Generic;
 
 public class PlayerAttributes : Photon.MonoBehaviour
 {
     public GameObject HealthObject;
 
+    public float HealthPlayer = 100;
     public float Damage = 15;
 
-    public float HealthPlayer = 100;
+    public ArrayList AttributesPlayer = new ArrayList();
+
+    private void Awake()
+    {
+        AttributesPlayer.Add(HealthPlayer);
+        AttributesPlayer.Add(Damage);
+    }
 
     void Start()
     {

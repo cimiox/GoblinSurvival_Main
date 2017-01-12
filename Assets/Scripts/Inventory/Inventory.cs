@@ -9,22 +9,26 @@ using System.ComponentModel;
 
 public class Inventory : MonoBehaviour
 {
-    #region Events
-
-
-    #endregion Events
-
     public GameObject InventoryPanel;
 
-    public static Inventory Instance = null;
-    GameObject inventoryPanel;
-    GameObject cellPanel;
+    private static Inventory instance;
+    public static Inventory Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                instance = new GameObject("Inventory").AddComponent<Inventory>();
+            }
 
-    GameObject cellPanelInGame;
+            return instance;
+        }
+    }
 
+    private GameObject cellPanel;
     public GameObject inventoryCell;
     public GameObject inventoryItem;
-    ItemDatabase database;
+    private ItemDatabase database;
 
     public TextAsset preservationItems;
 
@@ -47,7 +51,7 @@ public class Inventory : MonoBehaviour
     List<int> idItems = new List<int>();
     List<int> CountsItems = new List<int>();
 
-    List<int> ItemCellId = new List<int>();
+    public ArrayList ItemsAttributes = new ArrayList();
 
     public GameObject InventoryWindow;
 
@@ -65,36 +69,61 @@ public class Inventory : MonoBehaviour
 
     int activeInventoryPanel = 0;
 
-    void Start()
+    private void Start()
     {
-        Singletone();
+        for (int i = 0; i < items[1].ItemsAttributes.Length; i++)
+        {
+            print(items[1].ItemsAttributes[i]);
+        }
     }
 
     void LateUpdate()
     {
         ChangeState();
 
-        if (InventoryPanel.activeSelf && activeInventoryPanel == 0)
-        {
-            activeInventoryPanel++;
+        ChooseScene();
+    }
 
-            if (InventoryWindow.GetComponentsInChildren<Cell>().Length < countSlots)
-            {
-                LoadItemsInInventory();
-            }
-        }
-
-        if (!InventoryPanel.activeSelf)
+    private void ChooseScene()
+    {
+        switch (sceneState)
         {
-            activeInventoryPanel = 0;
+            case SceneState.InLobby:
+                if (InventoryPanel.activeSelf && activeInventoryPanel == 0)
+                {
+                    activeInventoryPanel++;
+
+                    if (InventoryWindow.GetComponentsInChildren<Cell>().Length < countSlots)
+                    {
+                        LoadItems();
+                    }
+                }
+
+                if (!InventoryPanel.activeSelf)
+                {
+                    activeInventoryPanel = 0;
+                }
+
+                return;
+            case SceneState.InGame:
+
+                if (InventoryWindow.GetComponentsInChildren<Cell>().Length < countSlots)
+                {
+                    LoadItems();
+
+                    print("Сколько раз вызвало");
+
+                    
+                    
+                }
+
+                return;
         }
     }
 
-    public void LoadItemsInInventory()
+    public void LoadItems()
     {
         CreateCells();
-
-        ChangeState();
 
         ReadInFile();
 
@@ -132,8 +161,6 @@ public class Inventory : MonoBehaviour
                     CountsItems.Add(0);
                 else
                     CountsItems.Add(int.Parse(item.ChildNodes[1].InnerText));
-                
-                ItemCellId.Add(Convert.ToInt32(item.ChildNodes[2].InnerText));
             }
 
         }
@@ -175,8 +202,16 @@ public class Inventory : MonoBehaviour
     private void CreateCells()
     {
         database = GetComponent<ItemDatabase>();
-        inventoryPanel = GameObject.Find("InventoryPanel");
-        cellPanel = inventoryPanel.transform.FindChild("InventoryWindow").gameObject;
+
+        if (sceneState == SceneState.InLobby)
+        {
+            cellPanel = InventoryPanel.transform.FindChild("InventoryWindow").gameObject;
+        }
+        else if (sceneState == SceneState.InGame)
+        {
+            cellPanel = GameObject.Find("InventoryWindow");
+        }
+        
 
         if (slots.Count != countSlots)
         {
@@ -235,8 +270,6 @@ public class Inventory : MonoBehaviour
     {
         Item itemToAdd = database.FetchItemById(id);
 
-        print("ID item to add - " + itemToAdd.Id);
-
         if (itemToAdd.Stackable && CheckItemInInventory(itemToAdd))
         {
             for (int i = 0; i < items.Count; i++)
@@ -270,13 +303,21 @@ public class Inventory : MonoBehaviour
                     itemObj.GetComponent<Image>().sprite = itemToAdd.Icon;
                     itemObj.name = itemToAdd.Tittle;
 
-                    itemsGameObjects.Add(new ItemObject(itemToAdd.Id, itemObj));
+                    itemsGameObjects.Add(new ItemObject(itemToAdd, itemObj, 1));
                     break;
                 }
             }
         }
 
-        WriteInFile();
+        if (sceneState == SceneState.InLobby)
+        {
+            WriteInFile();
+        }
+    }
+
+    private void GiveStats()
+    {
+
     }
 
     private void AddItemInInventory(int id, int slotID)
@@ -317,7 +358,7 @@ public class Inventory : MonoBehaviour
                         itemObj.GetComponent<Image>().sprite = itemToAdd.Icon;
                         itemObj.name = itemToAdd.Tittle;
 
-                        itemsGameObjects.Add(new ItemObject(itemToAdd.Id, itemObj));
+                        itemsGameObjects.Add(new ItemObject(itemToAdd, itemObj, 1));
                         break;
                     }
                 }
@@ -349,25 +390,17 @@ public class Inventory : MonoBehaviour
         return false;
     }
 
-    private void Singletone()
-    {
-        if (Instance == null)
-            Instance = this;
-        else
-            DestroyObject(this);
-
-        DontDestroyOnLoad(this);
-    }
-
     public class ItemObject
     {
-        public int ID { get; set; }
+        public Item Item { get; set; }
         public GameObject ItemObj { get; set; }
+        public int Count { get; set; }
 
-        public ItemObject(int id, GameObject item)
+        public ItemObject(Item item, GameObject itemObj, int countItems)
         {
-            this.ID = id;
-            this.ItemObj = item;
+            this.Item = item;
+            this.ItemObj = itemObj;
+            this.Count = countItems;
         }
     }
 

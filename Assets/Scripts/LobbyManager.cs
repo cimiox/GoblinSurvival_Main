@@ -39,8 +39,6 @@ public class LobbyManager : Photon.MonoBehaviour
         {
             PhotonNetwork.playerName = "Guest" + Random.Range(1, 100);
         }
-
-        print(PhotonNetwork.connectionStateDetailed);
     }
 
     void Update()

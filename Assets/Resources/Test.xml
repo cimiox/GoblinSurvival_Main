@@ -1,13 +1,13 @@
 <Items>
   <Item>
-    <Id>1</Id>
-    <InStack>
-    </InStack>
+    <Id>0</Id>
+    <InStack>3</InStack>
     <Slot>0</Slot>
   </Item>
   <Item>
-    <Id>0</Id>
-    <InStack>34</InStack>
+    <Id>1</Id>
+    <InStack>
+    </InStack>
     <Slot>1</Slot>
   </Item>
   <Item>

@@ -1,0 +1,74 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &100100000
+Prefab:
+  m_ObjectHideFlags: 1
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications: []
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 0}
+  m_RootGameObject: {fileID: 1690688165731248}
+  m_IsPrefabParent: 1
+--- !u!1 &1690688165731248
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4792639003588108}
+  - component: {fileID: 114081569387005510}
+  - component: {fileID: 114229122377060740}
+  m_Layer: 0
+  m_Name: InventoryG
+  m_TagString: Inventory
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4792639003588108
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1690688165731248}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 188.68848, y: 271.80875, z: -0.6875}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114081569387005510
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1690688165731248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 664833277640a034d9a36dec316bf6bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  database: []
+  _textAsset: {fileID: 4900000, guid: adf9ba9147181094eb402aedc9f43208, type: 3}
+--- !u!114 &114229122377060740
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1690688165731248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ae01c6651a05344da1a9894832e12a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  InventoryPanel: {fileID: 0}
+  inventoryCell: {fileID: 113312, guid: 26dfdbadd2b1ffb42b5f7d0a830eab10, type: 2}
+  inventoryItem: {fileID: 139526, guid: 9fb2e7d454ac9854983a8f58eb549867, type: 2}
+  preservationItems: {fileID: 4900000, guid: 202153e5bab6dc44aa9a1c9d3a82c422, type: 3}
+  items: []
+  slots: []
+  InventoryWindow: {fileID: 0}

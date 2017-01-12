@@ -18,8 +18,20 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     void Start()
     {
-        _inventory = GameObject.Find("Inventory").GetComponent<Inventory>();
-        _tooltip = _inventory.GetComponent<Tooltip>();
+        if (SceneManagerHelper.ActiveSceneName == "Lobby")
+        {
+            _inventory = GameObject.Find("InventoryM").GetComponent<Inventory>();
+        }
+        else
+        {
+            _inventory = GameObject.Find("InventoryG").GetComponent<Inventory>();
+        }
+        
+
+        if (_inventory.SceneState == SceneState.InLobby)
+        {
+            _tooltip = _inventory.GetComponent<Tooltip>();
+        }
 
         if (amount != 0)
         {
@@ -52,16 +64,23 @@ public class ItemData : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
         this.transform.position = _inventory.slots[cell].transform.position;
         GetComponent<CanvasGroup>().blocksRaycasts = true;
 
-        Inventory.Instance.WriteInFile();
+        _inventory.WriteInFile();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        _tooltip.Active(_item);
+        if (_inventory.SceneState == SceneState.InLobby)
+        {
+            _tooltip.Active(_item);
+        }
+
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        _tooltip.Deactive();
+        if (_inventory.SceneState == SceneState.InLobby)
+        {
+            _tooltip.Deactive();
+        }
     }
 }

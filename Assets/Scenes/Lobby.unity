@@ -1961,11 +1961,6 @@ Prefab:
       objectReference: {fileID: 1748001344}
     - target: {fileID: 114198840492979134, guid: d3ad0fb72e253e842a5c8f22cd9c6f65,
         type: 2}
-      propertyPath: text
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 114198840492979134, guid: d3ad0fb72e253e842a5c8f22cd9c6f65,
-        type: 2}
       propertyPath: InventoryWindow
       value: 
       objectReference: {fileID: 500983359}
