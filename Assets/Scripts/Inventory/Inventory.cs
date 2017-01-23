@@ -6,6 +6,7 @@ using UnityEngine.UI;
 using System.Xml;
 using System.IO;
 using System.ComponentModel;
+using System.Reflection;
 
 public class Inventory : MonoBehaviour
 {
@@ -71,16 +72,11 @@ public class Inventory : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < items[1].ItemsAttributes.Length; i++)
-        {
-            print(items[1].ItemsAttributes[i]);
-        }
     }
 
     void LateUpdate()
     {
         ChangeState();
-
         ChooseScene();
     }
 
@@ -111,11 +107,44 @@ public class Inventory : MonoBehaviour
                 {
                     LoadItems();
 
-                    print("Сколько раз вызвало");
+                    for (int i = 0; i < items.Count; i++)
+                    {
+                        foreach (var item in typeof(Item).GetProperties())
+                        {
+                            foreach (var attribute in typeof(PlayerAttributes).GetProperties())
+                            {
+                                if (item.Name == attribute.Name)
+                                {
+                                    float value = 0;
 
-                    
-                    
+                                    if (items[i].Stackable)
+                                    {
+                                        int count = 0;
+
+                                        for (int j = 0; j < itemsGameObjects.Count; j++)
+                                        {
+                                            if (items[i].Id == itemsGameObjects[j].Item.Id)
+                                            {
+                                                count = itemsGameObjects[j].ItemObj.GetComponent<ItemData>().amount;
+
+                                                value = (float)item.GetValue(items[i], null) * (count + 1);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                    else
+                                    {
+                                        value = (float)item.GetValue(items[i], null);
+                                    }
+
+                                    PlayerAttributes.Instance.AddAttributes(attribute.Name, value);
+                                }
+                            }
+                        }
+                    }
                 }
+
+
 
                 return;
         }
@@ -211,7 +240,7 @@ public class Inventory : MonoBehaviour
         {
             cellPanel = GameObject.Find("InventoryWindow");
         }
-        
+
 
         if (slots.Count != countSlots)
         {

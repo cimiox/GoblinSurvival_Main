@@ -6,17 +6,26 @@ using System.Collections.Generic;
 
 public class PlayerAttributes : Photon.MonoBehaviour
 {
+    public static PlayerAttributes Instance;
+
     public GameObject HealthObject;
 
-    public float HealthPlayer = 100;
-    public float Damage = 15;
-
-    public ArrayList AttributesPlayer = new ArrayList();
+    public float Health { get; set; }
+    public float Damage { get; set; }
 
     private void Awake()
     {
-        AttributesPlayer.Add(HealthPlayer);
-        AttributesPlayer.Add(Damage);
+        Health = 100;
+        Damage = 100;
+
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
 
     void Start()
@@ -28,8 +37,8 @@ public class PlayerAttributes : Photon.MonoBehaviour
         HealthObject.transform.parent = GameObject.Find("Canvas").transform;
 
 
-        HealthObject.GetComponent<Slider>().maxValue = HealthPlayer;
-        HealthObject.GetComponent<Slider>().value = HealthPlayer;
+        HealthObject.GetComponent<Slider>().maxValue = Health;
+        HealthObject.GetComponent<Slider>().value = Health;
     }
 
     void Update()
@@ -37,7 +46,7 @@ public class PlayerAttributes : Photon.MonoBehaviour
         HealthObject.transform.position = Camera.main.WorldToScreenPoint(transform.position) + new Vector3(10f, 30f, 0f);
         HealthObject.name = string.Format(PhotonNetwork.playerName + " HealthSlider");
 
-        if (HealthPlayer <= 0)
+        if (Health <= 0)
         {
             if (!photonView.isMine)
             {
@@ -53,6 +62,16 @@ public class PlayerAttributes : Photon.MonoBehaviour
         }
     }
 
+    public void AddAttributes(string nameProp, float value)
+    {
+        float attributeValue = (float)typeof(PlayerAttributes).GetProperty(nameProp).GetValue(this, null);
+        attributeValue += value;
+        typeof(PlayerAttributes).GetProperty(nameProp).SetValue(this, attributeValue, null);
+
+        HealthObject.GetComponent<Slider>().maxValue = Health;
+        HealthObject.GetComponent<Slider>().value = Health;
+    }
+
     public void TakeDamage(float damage)
     {
         GetComponent<PhotonView>().RPC("DamageTake", PhotonTargets.AllBuffered, damage);
@@ -62,9 +81,9 @@ public class PlayerAttributes : Photon.MonoBehaviour
     public void DamageTake(float damage)
     {
         Damage = damage;
-        HealthPlayer -= Damage;
+        Health -= Damage;
 
-        HealthObject.GetComponent<Slider>().value = HealthPlayer;
+        HealthObject.GetComponent<Slider>().value = Health;
     }
 }
 

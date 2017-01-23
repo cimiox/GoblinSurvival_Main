@@ -49,7 +49,7 @@ public class Attack : MonoBehaviour
     {
         timer = 0f;
 
-        if (PlayerAtt.HealthPlayer > 0)
+        if (PlayerAtt.Health > 0)
         {
             PlayerAtt.TakeDamage(EnemyAtt.enemyDamage);
         }

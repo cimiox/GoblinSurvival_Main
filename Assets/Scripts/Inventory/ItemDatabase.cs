@@ -20,7 +20,6 @@ public class ItemDatabase : MonoBehaviour
             DestroyObject(this);
 
         itemData = JsonMapper.ToObject(_textAsset.text);
-
         ConstructItemDatabase();
     }
 
@@ -40,10 +39,11 @@ public class ItemDatabase : MonoBehaviour
     {
         for (int i = 0; i < itemData.Count; i++)
         {
-            object[] stats = { (float)itemData[i]["Health"], (float)itemData[i]["Damage"] };
-
             database.Add(new Item((int)itemData[i]["Id"], (string)itemData[i]["Title"], (int)itemData[i]["Value"],
-                (string)itemData[i]["Slug"], (bool)itemData[i]["Stackable"], stats));
+            (string)itemData[i]["Slug"],
+            (bool)itemData[i]["Stackable"],
+            (float)(double)itemData[i]["Stats"]["Health"],
+            (float)(double)itemData[i]["Stats"]["Damage"]));
         }
     }
 }
@@ -57,16 +57,18 @@ public class Item
     public string Slug { get; set; }
     public bool Stackable { get; set; }
     public Sprite Icon { get; set; }
-    public object[] ItemsAttributes { get; set; }
+    public float Health { get; set; }
+    public float Damage { get; set; }
 
-    public Item(int id, string tittle, int value, string slug, bool stackable, params object[] itemsAttributes)
+    public Item(int id, string tittle, int value, string slug, bool stackable, float health, float damage)
     {
         this.Id = id;
         this.Tittle = tittle;
         this.Value = value;
         this.Stackable = stackable;
         Icon = Resources.Load<Sprite>("Sprites/" + slug);
-        ItemsAttributes = itemsAttributes;
+        Health = health;
+        Damage = damage;
     }
 
     public Item()

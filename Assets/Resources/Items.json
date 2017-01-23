@@ -4,21 +4,21 @@
         "Title": "The first item",
         "Value": 0,
         "Slug": "Sprite1",
-        "Stackable": true,
         "Stats": {
-            "Health": 0,
-            "Damage": 10
-        }
+            "Health": 100.0,
+            "Damage": 0.0
+        },
+        "Stackable": true
     },
     {
         "Id": 1,
         "Title": "The second item",
         "Value": 0,
         "Slug": "Sprite2",
-        "Stackable": false,
         "Stats": {
-            "Health": 100,
-            "Damage": 0
-        }
+            "Health": 100.0,
+            "Damage": 0.0
+        },
+        "Stackable": false
     }
 ]

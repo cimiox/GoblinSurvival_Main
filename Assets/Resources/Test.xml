@@ -1,7 +1,7 @@
 <Items>
   <Item>
     <Id>0</Id>
-    <InStack>3</InStack>
+    <InStack>2</InStack>
     <Slot>0</Slot>
   </Item>
   <Item>
@@ -15,23 +15,5 @@
     <InStack>
     </InStack>
     <Slot>2</Slot>
-  </Item>
-  <Item>
-    <Id>1</Id>
-    <InStack>
-    </InStack>
-    <Slot>3</Slot>
-  </Item>
-  <Item>
-    <Id>1</Id>
-    <InStack>
-    </InStack>
-    <Slot>4</Slot>
-  </Item>
-  <Item>
-    <Id>1</Id>
-    <InStack>
-    </InStack>
-    <Slot>5</Slot>
   </Item>
 </Items>

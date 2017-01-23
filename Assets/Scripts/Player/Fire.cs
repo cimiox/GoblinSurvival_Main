@@ -10,7 +10,7 @@ public class Fire : Photon.MonoBehaviour
 {
     public GameObject ConnectionLobby;
     PlayerAttributes Player;
-    int shootableMask = LayerMask.GetMask("Shootable");
+    int shootableMask;
     Ray shootRay;
     RaycastHit shootHit;
     LineRenderer gunLine;
@@ -30,6 +30,7 @@ public class Fire : Photon.MonoBehaviour
 
     void Start()
     {
+        shootableMask = LayerMask.GetMask("Shootable");
         gunLine = GetComponent<LineRenderer>();
         Player = GetComponent<PlayerAttributes>();
         ConnectionLobby = GameObject.Find("ConnectionLobby");
