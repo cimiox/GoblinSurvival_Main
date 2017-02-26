@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 11445660}
   - component: {fileID: 13569792}
   - component: {fileID: 5460628}
-  - component: {fileID: 11102514}
+  - component: {fileID: 95332763090010148}
   m_Layer: 8
   m_Name: Goblin
   m_TagString: Player
@@ -762,7 +762,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 120440}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.272954, y: 2.54, z: 14.972448}
+  m_LocalPosition: {x: -1.4248776, y: -1.3069963, z: 3.3476167}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 414516}
@@ -1265,27 +1265,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.03434847, y: 0.06384648, z: 0.05247961}
   m_Center: {x: 0.00783028, y: 0.0069603208, z: 0.0011234077}
---- !u!111 &11102514
-Animation:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 120440}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 7400010, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
-  m_Animations:
-  - {fileID: 7400010, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
-  - {fileID: 7400012, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
-  - {fileID: 7400004, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
-  - {fileID: 7400008, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
-  - {fileID: 7400006, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
-  - {fileID: 7400000, guid: a7e46e8c78969864d8275b458efad91b, type: 2}
-  - {fileID: 7400014, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
 --- !u!114 &11401696
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1309,8 +1288,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   HealthObject: {fileID: 0}
-  Damage: 0
-  HealthPlayer: 300
 --- !u!114 &11457062
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1361,8 +1338,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownerId: 0
   group: 0
+  OwnerShipWasTransfered: 0
   prefixBackup: -1
-  observed: {fileID: 0}
   synchronization: 3
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
@@ -1372,6 +1349,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
+  currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &11484188
 MonoBehaviour:
@@ -1386,8 +1364,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownerId: 0
   group: 0
+  OwnerShipWasTransfered: 0
   prefixBackup: -1
-  observed: {fileID: 0}
   synchronization: 0
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
@@ -1397,6 +1375,7 @@ MonoBehaviour:
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
+  currentMasterID: -1
   isRuntimeInstantiated: 0
 --- !u!114 &11491766
 MonoBehaviour:
@@ -2001,3 +1980,20 @@ Prefab:
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 120440}
   m_IsPrefabParent: 1
+--- !u!95 &95332763090010148
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 120440}
+  m_Enabled: 1
+  m_Avatar: {fileID: 9000000, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
+  m_Controller: {fileID: 9100000, guid: 033dd9a48b942ab46ba63bc2fcc71df4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1

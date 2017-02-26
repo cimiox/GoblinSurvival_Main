@@ -29,7 +29,7 @@ public class MovePlayer : Photon.MonoBehaviour
 
     private Animation _animation;
 
-
+    private Animator animator;
     #endregion Animation
 
 
@@ -37,14 +37,12 @@ public class MovePlayer : Photon.MonoBehaviour
     public float Horizontal
     {
         get { return CrossPlatformInputManager.GetAxis("Horizontal"); }
-        //set { horizontal = CrossPlatformInputManager.GetAxis("Horizontal"); }
     }
 
     private float vertical;
     public float Vertical
     {
         get { return CrossPlatformInputManager.GetAxis("Vertical"); }
-        //set { vertical = CrossPlatformInputManager.GetAxis("Vertical"); }
     }
 
     public float speedRotate = 8f;
@@ -57,6 +55,7 @@ public class MovePlayer : Photon.MonoBehaviour
 
     void Awake()
     {
+        animator = GetComponent<Animator>();
         conLobbyComponent = GameObject.Find("ConnectionLobby").GetComponent<ConnectionLobby>();
         searchEnemyComponent = GetComponentInChildren<SearchEnemy>();
         _animation = GetComponent<Animation>();
@@ -73,19 +72,19 @@ public class MovePlayer : Photon.MonoBehaviour
                 if (!conLobbyComponent.isShoot || !searchEnemyComponent.CheckCollider || searchEnemyComponent.objectToRotate == null)
                 {
                     RotatePlayer();
-                    _playerState = PlayerState.TakeGunBack;
+                    //_playerState = PlayerState.TakeGunBack;
                 }
                 else
                 {
                     searchEnemyComponent.RotateToEnemy(speedRotate);
-                    if (Vertical == 0 && Horizontal == 0)
-                    {
-                        _playerState = PlayerState.Shoot;
-                    }
-                    else
-                    {
-                        _playerState = PlayerState.RunShoot;
-                    }
+                    //if (Vertical == 0 && Horizontal == 0)
+                    //{
+                    //    _playerState = PlayerState.Shoot;
+                    //}
+                    //else
+                    //{
+                    //    _playerState = PlayerState.RunShoot;
+                    //}
                 }
             }
             else
@@ -93,18 +92,19 @@ public class MovePlayer : Photon.MonoBehaviour
                 if (conLobbyComponent.isShoot)
                 {
                     searchEnemyComponent.RotateToEnemy(speedRotate);
-                    if (Vertical == 0 && Horizontal == 0)
-                    {
-                        _playerState = PlayerState.Shoot;
-                    }
-                    else
-                    {
-                        _playerState = PlayerState.RunShoot;
-                    }
+
+                    //if (Vertical == 0 && Horizontal == 0)
+                    //{
+                    //    _playerState = PlayerState.Shoot;
+                    //}
+                    //else
+                    //{
+                    //    _playerState = PlayerState.RunShoot;
+                    //}
                 }
                 else
                 {
-                    _playerState = PlayerState.IdleFirst;
+                    //_playerState = PlayerState.IdleFirst;
                 }
             }
         }
@@ -112,51 +112,51 @@ public class MovePlayer : Photon.MonoBehaviour
     
     void Update()
     {
-        if (_playerState == PlayerState.IdleFirst)
-        {
-            timer += Time.deltaTime;
-            _animation[IdleFirstAnimation.name].wrapMode = WrapMode.ClampForever;
-            _animation.CrossFade(IdleFirstAnimation.name);
+        //if (_playerState == PlayerState.IdleFirst)
+        //{
+        //    timer += Time.deltaTime;
+        //    _animation[IdleFirstAnimation.name].wrapMode = WrapMode.ClampForever;
+        //    _animation.CrossFade(IdleFirstAnimation.name);
 
-            if (timer >= _animation[IdleFirstAnimation.name].clip.averageDuration)
-            {
-                _animation.CrossFade(IdleSecondAnimation.name);
-                timer = 0;
-            }
-            CheckTakeGunAnimation = true;
-        }
-        else if (_playerState == PlayerState.TakeGunBack)
-        {
-            if (CheckTakeGunAnimation)
-            {
-                timer += Time.deltaTime;
-                _animation[TakeGunBackAnimation.name].wrapMode = WrapMode.ClampForever;
-                _animation.CrossFade(TakeGunBackAnimation.name);
-            }
+        //    if (timer >= _animation[IdleFirstAnimation.name].clip.averageDuration)
+        //    {
+        //        _animation.CrossFade(IdleSecondAnimation.name);
+        //        timer = 0;
+        //    }
+        //    CheckTakeGunAnimation = true;
+        //}
+        //else if (_playerState == PlayerState.TakeGunBack)
+        //{
+        //    if (CheckTakeGunAnimation)
+        //    {
+        //        timer += Time.deltaTime;
+        //        _animation[TakeGunBackAnimation.name].wrapMode = WrapMode.ClampForever;
+        //        _animation.CrossFade(TakeGunBackAnimation.name);
+        //    }
 
-            if (timer >= _animation[TakeGunBackAnimation.name].clip.averageDuration || !CheckTakeGunAnimation)
-            {
-                _animation[RunGunBackAnimation.name].speed = 0.8f;
-                _animation.CrossFade(RunGunBackAnimation.name);
-                CheckTakeGunAnimation = false;
-            }
-        }
-        else if (_playerState == PlayerState.Shoot)
-        {
-            _animation[ShootAnimation.name].wrapMode = WrapMode.Loop;
-            _animation[ShootAnimation.name].speed = 0.35f;
-            _animation.CrossFade(ShootAnimation.name);
-        }
-        else if (_playerState == PlayerState.RunShoot)
-        {
-            _animation[RunShootAnimation.name].wrapMode = WrapMode.Loop;
-            _animation.CrossFade(RunShootAnimation.name);
-        }
-        else
-        {
-            _animation[DeathAnimation.name].wrapMode = WrapMode.Loop;
-            _animation.CrossFade(DeathAnimation.name);
-        }
+        //    if (timer >= _animation[TakeGunBackAnimation.name].clip.averageDuration || !CheckTakeGunAnimation)
+        //    {
+        //        _animation[RunGunBackAnimation.name].speed = 0.8f;
+        //        _animation.CrossFade(RunGunBackAnimation.name);
+        //        CheckTakeGunAnimation = false;
+        //    }
+        //}
+        //else if (_playerState == PlayerState.Shoot)
+        //{
+        //    _animation[ShootAnimation.name].wrapMode = WrapMode.Loop;
+        //    _animation[ShootAnimation.name].speed = 0.35f;
+        //    _animation.CrossFade(ShootAnimation.name);
+        //}
+        //else if (_playerState == PlayerState.RunShoot)
+        //{
+        //    _animation[RunShootAnimation.name].wrapMode = WrapMode.Loop;
+        //    _animation.CrossFade(RunShootAnimation.name);
+        //}
+        //else
+        //{
+        //    _animation[DeathAnimation.name].wrapMode = WrapMode.Loop;
+        //    _animation.CrossFade(DeathAnimation.name);
+        //}
     }
 
     private void RotatePlayer()

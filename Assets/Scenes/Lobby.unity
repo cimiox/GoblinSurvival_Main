@@ -3733,19 +3733,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400030, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0.29976374
+      value: -0.2997637
       objectReference: {fileID: 0}
     - target: {fileID: 400030, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.6416567
+      value: 0.64165664
       objectReference: {fileID: 0}
     - target: {fileID: 400030, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.2950956
+      value: -0.29509556
       objectReference: {fileID: 0}
     - target: {fileID: 400030, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.6413557
+      value: 0.64135563
       objectReference: {fileID: 0}
     - target: {fileID: 13700002, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -3925,7 +3925,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 11100000, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
       propertyPath: m_CullingType
@@ -4005,11 +4005,6 @@ Prefab:
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
   m_PrefabInternal: {fileID: 1952974817}
---- !u!111 &2107630958 stripped
-Animation:
-  m_PrefabParentObject: {fileID: 11100000, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d,
-    type: 3}
-  m_PrefabInternal: {fileID: 1952974817}
 --- !u!114 &2107630960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4021,7 +4016,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc687ff47705fc34fa080b5306870e15, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _animation: {fileID: 2107630958}
+  _animation: {fileID: 0}
   AnimationAll: {fileID: 7400000, guid: 0cf4649a34a9e1d4d90542d5e8d6b61d, type: 3}
 --- !u!136 &2107630961
 CapsuleCollider:

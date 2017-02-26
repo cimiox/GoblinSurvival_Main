@@ -38,13 +38,13 @@ public class SyncronizeMovePlayer : Photon.MonoBehaviour
     {
         if (stream.isWriting)
         {
-            stream.SendNext((int)_movePlayer._playerState);
+            //stream.SendNext((int)_movePlayer._playerState);
             stream.SendNext(transform.position);
             stream.SendNext(transform.rotation);
         }
         else
         {
-            _movePlayer._playerState = (PlayerState)(int)stream.ReceiveNext();
+            //_movePlayer._playerState = (PlayerState)(int)stream.ReceiveNext();
             correctPlayerPos = (Vector3)stream.ReceiveNext();
             correctPlayerRot = (Quaternion)stream.ReceiveNext();
 
