@@ -1,7 +1,8 @@
 <Items>
   <Item>
     <Id>0</Id>
-    <InStack>2</InStack>
+    <InStack>
+    </InStack>
     <Slot>0</Slot>
   </Item>
   <Item>

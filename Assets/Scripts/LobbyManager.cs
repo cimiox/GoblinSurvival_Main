@@ -18,23 +18,17 @@ public class LobbyManager : Photon.MonoBehaviour
     public Text ConnectionProblemInfo;
     public GameObject InventoryPanel;
     public GameObject GroupPanelLobby;
-    public GameObject GroupPanelNoConnection;
+    //public GameObject GroupPanelNoConnection;
     public GameObject GoblinStalker;
     public GameObject GoblinSniper;
     bool check = true;
     private bool connectFailed = false;
 
-    const string usingSetting = "0.1";
-
     void Awake()
     {
-        PhotonNetwork.automaticallySyncScene = true;
-
-        if (PhotonNetwork.connectionStateDetailed == ClientState.PeerCreated)
-        {
-            PhotonNetwork.ConnectUsingSettings(usingSetting);
-        }
-
+        Connection.Connect();
+        Connection.LoadConnectionProblemPanel();
+        GroupPanelLobby.SetActive(true);
         if (string.IsNullOrEmpty(PhotonNetwork.playerName))
         {
             PhotonNetwork.playerName = "Guest" + Random.Range(1, 100);
@@ -43,41 +37,16 @@ public class LobbyManager : Photon.MonoBehaviour
 
     void Update()
     {
-        if (!PhotonNetwork.connected)
-        {
-            GroupPanelNoConnection.SetActive(true);
-            if (PhotonNetwork.connecting)
-            {
-                ConnectionProblemInfo.text = "Connecting to: " + PhotonNetwork.ServerAddress + "\n";
-            }
-            else
-            {
-                ConnectionProblemInfo.text = "Not connected. Check console output. Detailed connection state: " + PhotonNetwork.connectionStateDetailed + " Server: " + PhotonNetwork.ServerAddress;
-            }
-
-            if (this.connectFailed)
-            {
-                ConnectionProblemInfo.text = "Connection failed. Check setup and use Setup Wizard to fix configuration. \n";
-                ConnectionProblemInfo.text += string.Format("Server: {0}", new object[] { PhotonNetwork.ServerAddress }) + "\n";
-                ConnectionProblemInfo.text += "AppId: " + PhotonNetwork.PhotonServerSettings.AppID.Substring(0, 8) + "****" + "\n";
-
-                TryAgainButton.gameObject.SetActive(true);
-            }
-
-            return;
-        }
-
-        GroupPanelNoConnection.SetActive(false);
-        if (check)
-        {
-            GroupPanelLobby.SetActive(true);
-        }
+        //GroupPanelNoConnection.SetActive(false);
+        //if (check)
+        //{
+        //    GroupPanelLobby.SetActive(true);
+        //}
     }
 
     public void TryAganinButton()
     {
         connectFailed = false;
-        PhotonNetwork.ConnectUsingSettings(usingSetting);
     }
 
     public void CreateRoomHandler()
