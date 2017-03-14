@@ -5,10 +5,7 @@ using UnityEngine.UI;
 
 public class Connection : Photon.PunBehaviour
 {
-    const string ConnectSetting = "v0.1";
-
-    private delegate void GettingLog();
-    private event GettingLog GetLog;
+    private const string ConnectSetting = "v0.1";
 
     private static string logError;
     public static string LogError
@@ -16,6 +13,23 @@ public class Connection : Photon.PunBehaviour
         get { return logError; }
         set { logError = value; }
     }
+
+    public static string PlayerName
+    {
+        get
+        {
+            if (!string.IsNullOrEmpty(PlayerPrefs.GetString("PlayerName")))
+                return PhotonNetwork.playerName = PlayerPrefs.GetString("PlayerName");
+            else
+                return PhotonNetwork.playerName;
+        }
+        private set
+        {
+            PhotonNetwork.playerName = value;
+            PlayerPrefs.SetString("PlayerName", PhotonNetwork.playerName);
+        }
+    }
+
 
     /// <summary>
     /// Create connect to Photon Cloud
@@ -41,25 +55,36 @@ public class Connection : Photon.PunBehaviour
     /// Give error log
     /// </summary>
     /// <param name="textObj"></param>
-    public static void GetLogError(GameObject textObj)
+    public static string GetLogError()
     {
-        if (textObj.GetComponent<Text>() != null)
-        {
-            textObj.GetComponent<Text>().text = LogError;
-        }
+        if (LogError.Trim().Length != 0)
+            return LogError;
+        else
+            return "Никаких ошибок";
     }
 
-    public static void LoadConnectionProblemPanel()
+    /// <summary>
+    /// Method for Login panel, send the player name
+    /// </summary>
+    /// <param name="input">Field for playerName</param>
+    /// <param name="text">UI for player name</param>
+    public void CreatePlayerName(InputField input)
     {
-        GameObject noConnectionPanel = Instantiate(Resources.Load("UI/NoConnection") as GameObject);
-        noConnectionPanel.transform.SetParent(GameObject.Find("Canvas").transform);
-        //noConnectionPanel.GetComponent<RectTransform>().SetSizeWithCurrentAnchors(RectTransform.Axis.Horizontal, 500);
+        PlayerName = input.text;
+    }
 
-        noConnectionPanel.GetComponent<RectTransform>().offsetMax = Vector2.zero;
-        noConnectionPanel.GetComponent<RectTransform>().offsetMin = Vector2.zero;
+    /// <summary>
+    /// Intialize all UI
+    /// </summary>
+    protected void Intialize()
+    {
+        Connect();
+        UILibrary.GetCanvasChildrens();
 
-        noConnectionPanel.GetComponent<RectTransform>().localScale = Vector3.one;
+        if (string.IsNullOrEmpty(PlayerName))
+            UILibrary.ShowElement(UILibrary.LoggingUI);
 
-        noConnectionPanel.transform.FindChild("ConnectionProblemInfo").GetComponent<Text>().text = LogError;
+        UILibrary.ShowElement(UILibrary.LobbyUI);
+        UILibrary.LobbyUI.transform.FindChild("Nickname").GetComponent<Text>().text = "Nickname: " + PlayerName;
     }
 }

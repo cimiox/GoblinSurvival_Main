@@ -3,9 +3,8 @@ using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class LobbyManager : Photon.MonoBehaviour
+public class LobbyManager : Connection
 {
-    public InputField NicknameField;
     public InputField RoomNameField;
     public Button CreateRoom;
     public Button JoinRoom;
@@ -14,39 +13,13 @@ public class LobbyManager : Photon.MonoBehaviour
     public Button ShowPlayersButton;
     public Button ShowMenu;
     public Button NextPlayerButton;
-    public Button InventoryButton;
     public Text ConnectionProblemInfo;
-    public GameObject InventoryPanel;
-    public GameObject GroupPanelLobby;
-    //public GameObject GroupPanelNoConnection;
     public GameObject GoblinStalker;
     public GameObject GoblinSniper;
-    bool check = true;
-    private bool connectFailed = false;
 
-    void Awake()
+    private void Awake()
     {
-        Connection.Connect();
-        Connection.LoadConnectionProblemPanel();
-        GroupPanelLobby.SetActive(true);
-        if (string.IsNullOrEmpty(PhotonNetwork.playerName))
-        {
-            PhotonNetwork.playerName = "Guest" + Random.Range(1, 100);
-        }
-    }
-
-    void Update()
-    {
-        //GroupPanelNoConnection.SetActive(false);
-        //if (check)
-        //{
-        //    GroupPanelLobby.SetActive(true);
-        //}
-    }
-
-    public void TryAganinButton()
-    {
-        connectFailed = false;
+        Intialize();
     }
 
     public void CreateRoomHandler()
@@ -61,8 +34,6 @@ public class LobbyManager : Photon.MonoBehaviour
             return;
 
         PhotonNetwork.CreateRoom(RoomNameField.text, new RoomOptions { MaxPlayers = 5 }, null);
-
-        PhotonNetwork.playerName = NicknameField.text;
     }
 
     public void OnJoinedRoom()
@@ -80,11 +51,6 @@ public class LobbyManager : Photon.MonoBehaviour
         PhotonNetwork.JoinRandomRoom();
     }
 
-    public void OnFailedToConnectToPhoton(object parameters)
-    {
-        this.connectFailed = true;
-    }
-
     public void OnCreatedRoom()
     {
         PhotonNetwork.LoadLevel("Main");
@@ -92,8 +58,6 @@ public class LobbyManager : Photon.MonoBehaviour
 
     public void ShowPlayers()
     {
-        check = false;
-        GroupPanelLobby.SetActive(false);
         GoblinStalker.SetActive(true);
         ShowMenu.gameObject.SetActive(true);
         NextPlayerButton.gameObject.SetActive(true);
@@ -101,39 +65,9 @@ public class LobbyManager : Photon.MonoBehaviour
 
     public void ActiveMenu()
     {
-        check = true;
         ShowMenu.gameObject.SetActive(false);
         GoblinStalker.SetActive(false);
         GoblinSniper.SetActive(false);
         NextPlayerButton.gameObject.SetActive(false);
-        InventoryPanel.SetActive(false);
-    }
-
-    public void NextPlayer()
-    {
-        if (GoblinStalker.activeSelf)
-        {
-            GoblinSniper.SetActive(true);
-            GoblinStalker.SetActive(false);
-        }
-        else if (GoblinSniper.activeSelf)
-        {
-            GoblinSniper.SetActive(false);
-            GoblinStalker.SetActive(true);
-        }
-    }
-
-    public void ShowInventory()
-    {
-        check = false;
-        GroupPanelLobby.SetActive(false);
-        InventoryPanel.SetActive(true);
-    }
-
-    public void BackToLobby()
-    {
-        check = true;
-        GroupPanelLobby.SetActive(true);
-        InventoryPanel.SetActive(false);
     }
 }
